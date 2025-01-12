@@ -3,19 +3,19 @@
 ## Build
 
 ```shell
-docker build --platform linux/amd64 -t test-lambda:test .
+docker build -t test-lambda:test .
 ```
 
 ## Test
 
 ```shell
-docker run --platform linux/amd64 -p 9000:8080 test-lambda:test
+docker run -p 9000:8080 test-lambda:test
 ```
 
 In a separate terminal:
 
 ```console
-$ curl "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+$ curl -sS "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}' | jq
 "Hello from AWS Lambda using Python3.12.7 (main, Oct 14 2024, 11:21:50) [GCC 11.4.1 20230605 (Red Hat 11.4.1-2)]!"
 ```
 

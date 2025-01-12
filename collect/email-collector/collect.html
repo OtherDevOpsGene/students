@@ -1,0 +1,26 @@
+<form id="emailForm">
+  <input type="email" id="emailInput" required>
+  <button type="submit">Subscribe</button>
+</form>
+
+<script>
+document.getElementById('emailForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  
+  try {
+      const response = await fetch('YOUR_API_GATEWAY_URL', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+      });
+      
+      const result = await response.json();
+      alert(result.message);
+  } catch (error) {
+      alert('Error submitting email');
+  }
+});
+</script>

@@ -5,6 +5,7 @@ import os
 import logging
 from botocore.exceptions import ClientError
 from flask import Flask, render_template, request, flash, redirect, url_for
+import awsgi
 
 # Configure logging
 logging.basicConfig(
@@ -178,8 +179,6 @@ def success(username):
     """Render the success page."""
     return render_template('success.html', username=username)
 
-@app.route('/get_user_data/<username>')
-
-if __name__ == '__main__':
+def handler(event, context):
     logger.info("Starting application with DynamoDB table: %s", DYNAMODB_TABLE)
-    app.run(debug=True,port=8080)
+    return awsgi.response(app, event, context)

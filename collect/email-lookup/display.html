@@ -1,0 +1,34 @@
+<div>
+  <input type="email" id="emailInput" placeholder="Enter email to lookup">
+  <button onclick="lookupEmail()">Lookup</button>
+  <div id="results"></div>
+</div>
+
+<script>
+async function lookupEmail() {
+  const email = document.getElementById('emailInput').value;
+  const resultsDiv = document.getElementById('results');
+  
+  try {
+      const response = await fetch(`YOUR_API_GATEWAY_URL?email=${encodeURIComponent(email)}`, {
+          method: 'GET',
+          headers: {
+              'Accept': 'application/json'
+          }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+          resultsDiv.innerHTML = `
+              <h3>Results:</h3>
+              <pre>${JSON.stringify(data.records, null, 2)}</pre>
+          `;
+      } else {
+          resultsDiv.innerHTML = `<p>Error: ${data.message}</p>`;
+      }
+  } catch (error) {
+      resultsDiv.innerHTML = '<p>Error performing lookup</p>';
+  }
+}
+</script>
